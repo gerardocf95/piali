@@ -1,0 +1,1 @@
+ALTER TABLE destination ALTER COLUMN description TYPE TEXT;

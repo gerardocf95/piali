@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: piali-postgres-spring-boot
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: jerrycf
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5373:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
