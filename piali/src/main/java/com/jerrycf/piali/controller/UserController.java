@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -22,6 +22,12 @@ public class UserController {
 
     private String currentEmail() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers().stream()
+                .map(UserResponse::from).toList());
     }
 
     @GetMapping("/me")
@@ -42,13 +48,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers().stream()
-                .map(UserResponse::from).toList());
-    }
-
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
