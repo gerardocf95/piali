@@ -7,9 +7,12 @@ const apiClient = axios.create({
 
 // Interceptor: adjunta el JWT automáticamente (como un OncePerRequestFilter)
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  // localStorage solo existe en el navegador, no en el servidor
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });

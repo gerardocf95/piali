@@ -47,9 +47,11 @@ const GRADIENT_135 = "linear-gradient(135deg, #e91e8c, #8b5cf6)";
 
 export default async function HomePage() {
   const [destinations, featuredTours] = await Promise.all([
-    getDestinations().catch(() => [] as Destination[]),
-    getFeaturedTours().catch(() => [] as Tour[]),
+    getDestinations().catch((e) => { console.error("❌ destinations:", e.message); return [] as Destination[]; }),
+    getFeaturedTours().catch((e) => { console.error("❌ featuredTours:", e.message); return [] as Tour[]; }),
   ]);
+
+  console.log("✅ featuredTours recibidos:", featuredTours.length);
 
   return (
     <main style={{ backgroundColor: "#0a0a0f", color: "#ffffff", fontFamily: "'Nunito', sans-serif" }}>
@@ -198,7 +200,7 @@ export default async function HomePage() {
             {destinations.slice(0, 8).map((dest) => (
               <Link key={dest.id} href={`/destinations/${dest.id}`} style={{ textDecoration: "none", position: "relative", height: "180px", borderRadius: "12px", overflow: "hidden", display: "block" }}>
                 {dest.imageUrl
-                  ? <img src={dest.imageUrl} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(80%)", transition: "filter 0.4s" }} onMouseEnter={e => (e.currentTarget.style.filter = "grayscale(0%)")} onMouseLeave={e => (e.currentTarget.style.filter = "grayscale(80%)")} />
+                  ? <img src={dest.imageUrl} alt={dest.name} className="dest-img" />
                   : <div style={{ width: "100%", height: "100%", background: "#1a1a2e" }} />
                 }
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
