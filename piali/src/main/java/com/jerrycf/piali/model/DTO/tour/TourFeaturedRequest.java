@@ -1,8 +1,8 @@
 package com.jerrycf.piali.model.DTO.tour;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record TourFeaturedRequest(
-        @NotBlank Boolean featured
+        @NotNull Boolean featured
 ) {
 }

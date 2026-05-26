@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 //.anyRequest().permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/destinations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/tours/**").permitAll()
                         //.requestMatchers(HttpMethod.GET, "/api/v1/destinations/featured").permitAll()
                         .anyRequest().authenticated() //Any other request needs authentication
                 )

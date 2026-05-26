@@ -5,5 +5,6 @@ public enum TourType {
     AVENTURA,
     GASTRONOMICO,
     NATURALEZA,
-    HISTORICO
+    HISTORICO,
+    OTRO
 }
