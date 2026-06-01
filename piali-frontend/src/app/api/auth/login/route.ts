@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { email, password } = await req.json();
 
     // Llamamos a Spring Boot
-    const backendRes = await fetch(`${SPRING_BOOT_URL}/auth/login`, {
+    const backendRes = await fetch(`${SPRING_BOOT_URL}/api/v1/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

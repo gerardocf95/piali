@@ -13,7 +13,7 @@ export type MexicanState =
   | "GUERRERO"
   | "HIDALGO"
   | "JALISCO"
-  | "MEXICO"
+  | "ESTADO_DE_MEXICO"
   | "MICHOACAN"
   | "MORELOS"
   | "NAYARIT"
