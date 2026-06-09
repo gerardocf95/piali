@@ -35,7 +35,7 @@ public record TourRequest(
         @PositiveOrZero(message = "La duracion no puede ser negativa")
         Integer durationDays,
         
-        @Positive(message = "Las noches deben ser mayor a cero")
+        @PositiveOrZero(message = "Las noches deben ser mayor a cero")
         Integer nights,
         
         @Positive(message = "La capacidad mínima debe ser mayor a cero")
@@ -53,6 +53,8 @@ public record TourRequest(
         
         String notIncludes,
         
-        String itinerary
+        String itinerary,
+
+        Boolean featured
 ) {
 }

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -61,7 +60,7 @@ public class Tour {
     @PositiveOrZero(message = "La duración no puede ser negativa")
     private Integer durationDays;
 
-    @Positive(message = "Las noches deben ser mayor a cero")
+    @PositiveOrZero(message = "Las noches deben ser mayor a cero")
     private Integer nights; // null = tour de un día (sin hospedaje)
 
     @Column(nullable = false)

@@ -1,8 +1,8 @@
 import type { Destination } from "./destination";
 
-export type TourType = "CULTURAL" | "AVENTURA" | "GASTRONOMICO" | "NATURALEZA" | "HISTORICO";
+export type TourType = "CULTURAL" | "AVENTURA" | "GASTRONOMICO" | "NATURALEZA" | "HISTORICO" | "OTRO";
 export type DifficultyLevel = "FACIL" | "MODERADO" | "DIFICIL";
-export type TransportType = "BUS" | "VAN" | "AVION" | "MIXTO";
+export type TransportType = "CARRO" | "AUTOBUS" | "VAN" | "AVION" | "MIXTO";
 
 export interface Tour {
   id: number;

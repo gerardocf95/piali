@@ -5,7 +5,6 @@ import com.jerrycf.piali.model.DTO.tour.TourAvailabilityRequest;
 import com.jerrycf.piali.model.DTO.tour.TourFeaturedRequest;
 import com.jerrycf.piali.model.DTO.tour.TourRequest;
 import com.jerrycf.piali.model.DTO.tour.TourResponse;
-import com.jerrycf.piali.model.entity.Destination;
 import com.jerrycf.piali.model.entity.Tour;
 import com.jerrycf.piali.model.entity.TourType;
 import com.jerrycf.piali.repository.DestinationRepository;
@@ -142,5 +141,6 @@ public class TourService {
         tour.setIncludes(request.includes());
         tour.setNotIncludes(request.notIncludes());
         tour.setItinerary(request.itinerary());
+        tour.setFeatured(request.featured());
     }
 }

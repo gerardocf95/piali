@@ -19,6 +19,7 @@ const TOUR_TYPE_LABEL: Record<string, string> = {
   GASTRONOMICO: "Gastronómico",
   NATURALEZA: "Naturaleza",
   HISTORICO: "Histórico",
+  OTRO: "Otro"
 };
 
 const TESTIMONIALS = [
