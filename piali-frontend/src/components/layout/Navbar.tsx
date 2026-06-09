@@ -63,8 +63,8 @@ export default function Navbar() {
         <Image
           src="/logo.png"
           alt="Piali"
-          width={100}
-          height={40}
+          width={60}
+          height={50}
           priority
         />
       </Link>

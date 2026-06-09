@@ -5,6 +5,7 @@ import { getFeaturedTours } from "@/lib/api/tours.api";
 import { formatPrice } from "@/lib/utils";
 import type { Destination } from "@/types/destination";
 import type { Tour } from "@/types/tour";
+import { DestinationCard } from "@/components/features/destinations/DestinationCard";
 
 const STATS = [
   { value: "7+",   label: "Años de experiencia" },
@@ -187,14 +188,7 @@ export default async function HomePage() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px" }}>
             {destinations.slice(0, 8).map((dest) => (
-              <Link key={dest.id} href={`/destinations/${dest.id}`} style={{ textDecoration: "none", position: "relative", height: "180px", borderRadius: "12px", overflow: "hidden", display: "block" }}>
-                {dest.imageUrl
-                  ? <img src={dest.imageUrl} alt={dest.name} className="dest-img" />
-                  : <div style={{ width: "100%", height: "100%", background: "#1a1a2e" }} />
-                }
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
-                <p style={{ position: "absolute", bottom: "12px", left: "12px", fontWeight: 800, fontSize: "14px", color: "#fff" }}>{dest.name}</p>
-              </Link>
+              <DestinationCard key={dest.id} dest={dest} />
             ))}
           </div>
         </section>
