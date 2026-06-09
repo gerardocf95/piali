@@ -19,7 +19,6 @@ const TOUR_TYPE_LABEL: Record<string, string> = {
   GASTRONOMICO: "Gastronómico",
   NATURALEZA: "Naturaleza",
   HISTORICO: "Histórico",
-  OTRO: "Otro"
 };
 
 const TESTIMONIALS = [
@@ -52,24 +51,18 @@ export default async function HomePage() {
     getFeaturedTours().catch((e) => { console.error("❌ featuredTours:", e.message); return [] as Tour[]; }),
   ]);
 
-  console.log("✅ featuredTours recibidos:", featuredTours.length);
-
   return (
-    <main style={{ backgroundColor: "#0a0a0f", color: "#ffffff", fontFamily: "'Nunito', sans-serif" }}>
+    // padding-top: 64px para compensar el navbar fixed
+    <main style={{ backgroundColor: "#0a0a0f", color: "#ffffff", fontFamily: "'Nunito', sans-serif", paddingTop: "64px" }}>
 
       {/* ── HERO ── */}
-      <section style={{ position: "relative", minHeight: "90vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "100px 32px 80px", overflow: "hidden" }}>
-        {/* Imagen de fondo */}
+      <section id="hero" style={{ position: "relative", minHeight: "90vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "100px 32px 80px", overflow: "hidden" }}>
         <Image src="/hero-bg.jpg" alt="Pueblos mágicos de México" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
-        {/* Overlay */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,10,15,0.55), rgba(10,10,15,0.85))", zIndex: 1 }} />
-
-        {/* Contenido */}
         <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
           <span style={{ display: "inline-block", fontSize: "12px", padding: "6px 18px", borderRadius: "999px", border: "1px solid rgba(233,30,140,0.4)", background: "rgba(233,30,140,0.15)", color: "#f472b6", marginBottom: "24px" }}>
             ✦ Desde 2018 creando experiencias inolvidables
           </span>
-
           <h1 style={{ fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 900, lineHeight: 1.1, marginBottom: "20px", maxWidth: "700px" }}>
             Viajemos{" "}
             <span style={{ background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
@@ -77,19 +70,17 @@ export default async function HomePage() {
             </span>
             <br />por México
           </h1>
-
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.65)", maxWidth: "460px", lineHeight: 1.7, marginBottom: "36px" }}>
             Descubre los rincones más mágicos de México con experiencias personalizadas
             que transformarán tu forma de viajar.
           </p>
-
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/destinations" style={{ background: GRADIENT, color: "#fff", fontWeight: 800, fontSize: "14px", padding: "14px 32px", borderRadius: "999px", textDecoration: "none" }}>
+            <a href="#destinos" style={{ background: GRADIENT, color: "#fff", fontWeight: 800, fontSize: "14px", padding: "14px 32px", borderRadius: "999px", textDecoration: "none" }}>
               Explorar Destinos 📍
-            </Link>
-            <Link href="/tours" style={{ background: "transparent", color: "#fff", fontWeight: 800, fontSize: "14px", padding: "14px 32px", borderRadius: "999px", border: "2px solid rgba(255,255,255,0.3)", textDecoration: "none" }}>
+            </a>
+            <a href="#tours" style={{ background: "transparent", color: "#fff", fontWeight: 800, fontSize: "14px", padding: "14px 32px", borderRadius: "999px", border: "2px solid rgba(255,255,255,0.3)", textDecoration: "none" }}>
               Planea tu Viaje 📅
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -106,8 +97,8 @@ export default async function HomePage() {
         ))}
       </div>
 
-      {/* ── TOURS DESTACADOS ── */}
-      <section style={{ padding: "80px 48px" }}>
+      {/* ── TOURS DESTACADOS ── id="tours" para el navbar */}
+      <section id="tours" style={{ padding: "80px 48px" }}>
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <span style={{ display: "inline-block", fontSize: "11px", padding: "4px 16px", borderRadius: "999px", border: "1px solid rgba(139,92,246,0.4)", background: "rgba(139,92,246,0.15)", color: "#a78bfa", marginBottom: "16px" }}>
             Paquetes de Viaje
@@ -128,7 +119,6 @@ export default async function HomePage() {
             {featuredTours.slice(0, 4).map((tour) => (
               <Link key={tour.id} href={`/tours/${tour.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div style={{ background: "#13131f", borderRadius: "16px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", height: "100%", transition: "border-color 0.2s" }}>
-                  {/* Imagen */}
                   <div style={{ height: "200px", position: "relative", background: "#1a1a2e", overflow: "hidden" }}>
                     {tour.imageUrl && (
                       <img src={tour.imageUrl} alt={tour.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -140,7 +130,6 @@ export default async function HomePage() {
                       📍 {tour.destination?.state ?? "México"}
                     </span>
                   </div>
-                  {/* Body */}
                   <div style={{ padding: "20px", display: "flex", flexDirection: "column", flex: 1 }}>
                     <h3 style={{ fontSize: "15px", fontWeight: 800, marginBottom: "8px" }}>{tour.name}</h3>
                     <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", marginBottom: "12px", lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
@@ -166,7 +155,6 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          // Placeholder si no hay tours del backend aún
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "20px" }}>
             {[1, 2, 3, 4].map((i) => (
               <div key={i} style={{ background: "#13131f", borderRadius: "16px", height: "340px", border: "1px solid rgba(255,255,255,0.07)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -183,9 +171,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── DESTINOS ── */}
+      {/* ── DESTINOS ── id="destinos" para el navbar */}
       {destinations.length > 0 && (
-        <section style={{ padding: "0 48px 80px", background: "#0d0d15" }}>
+        <section id="destinos" style={{ padding: "0 48px 80px", background: "#0d0d15" }}>
           <div style={{ textAlign: "center", padding: "64px 0 40px" }}>
             <span style={{ display: "inline-block", fontSize: "11px", padding: "4px 16px", borderRadius: "999px", border: "1px solid rgba(139,92,246,0.4)", background: "rgba(139,92,246,0.15)", color: "#a78bfa", marginBottom: "16px" }}>
               Destinos
@@ -212,8 +200,8 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── TESTIMONIOS ── */}
-      <section style={{ padding: "80px 48px", background: "#0a0a0f" }}>
+      {/* ── TESTIMONIOS ── id="resenas" para el navbar */}
+      <section id="resenas" style={{ padding: "80px 48px", background: "#0a0a0f" }}>
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <span style={{ display: "inline-block", fontSize: "11px", padding: "4px 16px", borderRadius: "999px", border: "1px solid rgba(139,92,246,0.4)", background: "rgba(139,92,246,0.15)", color: "#a78bfa", marginBottom: "16px" }}>
             Testimonios
@@ -249,8 +237,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA FINAL ── */}
-      <section style={{ margin: "0 48px 80px", padding: "48px", borderRadius: "24px", border: "1px solid rgba(233,30,140,0.2)", background: "linear-gradient(135deg, rgba(233,30,140,0.12), rgba(139,92,246,0.12))", textAlign: "center" }}>
+      {/* ── CTA FINAL ── id="contacto" para el navbar */}
+      <section id="contacto" style={{ margin: "0 48px 80px", padding: "48px", borderRadius: "24px", border: "1px solid rgba(233,30,140,0.2)", background: "linear-gradient(135deg, rgba(233,30,140,0.12), rgba(139,92,246,0.12))", textAlign: "center" }}>
         <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 900, marginBottom: "12px" }}>
           ¿Tienes en mente{" "}
           <span style={{ background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>

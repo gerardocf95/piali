@@ -6,6 +6,10 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   title: "Piali — Pueblos Mágicos de México",
   description: "Tours auténticos a los pueblos mágicos de México desde CDMX.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
