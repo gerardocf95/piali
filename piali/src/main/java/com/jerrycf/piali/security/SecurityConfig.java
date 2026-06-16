@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/destinations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/tours/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/contact-messages").permitAll()
                         //.requestMatchers(HttpMethod.GET, "/api/v1/destinations/featured").permitAll()
                         .anyRequest().authenticated() //Any other request needs authentication
                 )
