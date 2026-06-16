@@ -40,8 +40,15 @@ export async function getAllTours(): Promise<Tour[]> {
     return res.json();
 }
 
-export async function getTourById(id: number): Promise<Tour> {
+export async function getTourById(id: number): Promise<Tour | null> {
   const res = await fetch(`${BASE}/api/v1/tours/${id}`, { cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Error ${res.status}`);
+  return res.json();
+}
+
+export async function getToursByDestination(destinationId: number): Promise<Tour[]> {
+  const res = await fetch(`${BASE}/api/v1/tours/destination/${destinationId}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Error ${res.status}`);
   return res.json();
 }

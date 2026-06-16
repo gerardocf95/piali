@@ -12,6 +12,13 @@ export async function getDestinations(): Promise<Destination[]> {
   return res.json();
 }
 
+export async function getDestinationById(id: number): Promise<Destination | null> {
+  const res = await fetch(`${BASE}/api/v1/destinations/${id}`, { cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Error ${res.status}`);
+  return res.json();
+}
+
 // ── MUTACIONES (client component → pasan por Next.js para adjuntar el JWT) ──
 export async function createDestination(payload: DestinationPayload): Promise<Destination> {
   const res = await fetch("/api/destinations", {

@@ -8,9 +8,10 @@ const GRADIENT     = "linear-gradient(90deg, #e91e8c, #8b5cf6)";
 const GRADIENT_135 = "linear-gradient(135deg, #e91e8c, #8b5cf6)";
 
 const NAV_ITEMS = [
-  { href: "/admin",              icon: "▦",  label: "Dashboard" },
-  { href: "/admin/destinations", icon: "📍", label: "Destinos"  },
-  { href: "/admin/tours",        icon: "🗺️", label: "Tours"     },
+  { href: "/admin",                  icon: "▦",  label: "Dashboard" },
+  { href: "/admin/destinations",     icon: "📍", label: "Destinos"  },
+  { href: "/admin/tours",            icon: "🗺️", label: "Tours"     },
+  { href: "/admin/contact-messages", icon: "✉️", label: "Mensajes"  },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

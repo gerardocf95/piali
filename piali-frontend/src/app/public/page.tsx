@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getDestinations } from "@/lib/api/destinations.api";
@@ -6,6 +7,8 @@ import { formatPrice } from "@/lib/utils";
 import type { Destination } from "@/types/destination";
 import type { Tour } from "@/types/tour";
 import { DestinationCard } from "@/components/features/destinations/DestinationCard";
+import ContactForm from "@/components/features/contact/ContactForm";
+import { WHATSAPP_NUMBER, CONTACT_EMAIL } from "@/lib/constants";
 
 const STATS = [
   { value: "7+",   label: "Años de experiencia" },
@@ -45,6 +48,18 @@ const TESTIMONIALS = [
 
 const GRADIENT = "linear-gradient(90deg, #e91e8c, #8b5cf6)";
 const GRADIENT_135 = "linear-gradient(135deg, #e91e8c, #8b5cf6)";
+
+export const metadata: Metadata = {
+  title: { absolute: "Piali — Viajes a los Pueblos Mágicos de México" },
+  description:
+    "Agencia de viajes a los pueblos mágicos de México. Tours culturales, de aventura y gastronómicos desde CDMX con experiencias personalizadas. ¡Viajemos juntos!",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Piali — Viajes a los Pueblos Mágicos de México",
+    description: "Descubre los rincones más mágicos de México con experiencias personalizadas.",
+    type: "website",
+  },
+};
 
 export default async function HomePage() {
   const [destinations, featuredTours] = await Promise.all([
@@ -231,20 +246,36 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA FINAL ── id="contacto" para el navbar */}
-      <section id="contacto" style={{ margin: "0 48px 80px", padding: "48px", borderRadius: "24px", border: "1px solid rgba(233,30,140,0.2)", background: "linear-gradient(135deg, rgba(233,30,140,0.12), rgba(139,92,246,0.12))", textAlign: "center" }}>
-        <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 900, marginBottom: "12px" }}>
-          ¿Tienes en mente{" "}
-          <span style={{ background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            realizar un viaje?
-          </span>
-        </h2>
-        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", marginBottom: "32px" }}>
-          En grupo, en pareja o individualmente. Comunícate con nosotros para apoyarte.
-        </p>
-        <Link href="/tours" style={{ display: "inline-block", background: GRADIENT, color: "#fff", fontWeight: 800, fontSize: "15px", padding: "16px 40px", borderRadius: "999px", textDecoration: "none" }}>
-          Solicitar Viaje Personalizado
-        </Link>
+      {/* ── CONTACTO ── id="contacto" para el navbar */}
+      <section id="contacto" style={{ margin: "0 48px 80px", padding: "48px", borderRadius: "24px", border: "1px solid rgba(233,30,140,0.2)", background: "linear-gradient(135deg, rgba(233,30,140,0.12), rgba(139,92,246,0.12))" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "40px", alignItems: "start" }}>
+          {/* Columna izquierda: pitch + datos */}
+          <div>
+            <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 900, marginBottom: "12px" }}>
+              ¿Tienes en mente{" "}
+              <span style={{ background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                realizar un viaje?
+              </span>
+            </h2>
+            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.6)", marginBottom: "28px", lineHeight: 1.7 }}>
+              En grupo, en pareja o individualmente. Déjanos tus datos y armamos juntos tu próxima aventura
+              por los pueblos mágicos de México.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "12px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 700 }}>
+                <span style={{ fontSize: "20px" }}>💬</span> WhatsApp directo
+              </a>
+              <a href={`mailto:${CONTACT_EMAIL}`} style={{ display: "flex", alignItems: "center", gap: "12px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 700 }}>
+                <span style={{ fontSize: "20px" }}>✉️</span> {CONTACT_EMAIL}
+              </a>
+            </div>
+          </div>
+
+          {/* Columna derecha: formulario */}
+          <div style={{ background: "#13131f", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: "28px" }}>
+            <ContactForm />
+          </div>
+        </div>
       </section>
 
     </main>
