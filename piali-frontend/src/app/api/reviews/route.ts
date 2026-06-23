@@ -3,22 +3,21 @@ import { cookies } from "next/headers";
 
 const BACKEND = process.env.BACKEND_URL ?? "http://localhost:8080";
 
-// Lista pública de destinos (para selects en cliente, p. ej. el formulario de reseña).
-export async function GET() {
-  const res = await fetch(`${BACKEND}/api/v1/destinations`, { cache: "no-store" });
-  const data = await res.json().catch(() => []);
-  return NextResponse.json(data, { status: res.status });
-}
-
+// Crear reseña requiere usuario autenticado: reenviamos el JWT de la cookie.
 export async function POST(req: NextRequest) {
   const token = (await cookies()).get("auth_token")?.value;
+
+  if (!token) {
+    return NextResponse.json({ message: "No autenticado" }, { status: 401 });
+  }
+
   const body = await req.json();
 
-  const res = await fetch(`${BACKEND}/api/v1/destinations`, {
+  const res = await fetch(`${BACKEND}/api/v1/reviews`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   });

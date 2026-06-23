@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 const BACKEND = process.env.BACKEND_URL ?? "http://localhost:8080";
 
-async function authHeaders() {
+async function authHeaders(): Promise<Record<string, string>> {
   const token = (await cookies()).get("auth_token")?.value;
   return token ? { Authorization: `Bearer ${token}` } : {};
 }

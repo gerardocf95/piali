@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import UserMenu from "@/components/layout/UserMenu";
 
 const GRADIENT = "linear-gradient(90deg, #e91e8c, #8b5cf6)";
 
@@ -92,27 +93,31 @@ export default function Navbar() {
         ))}
       </div>
 
-      {/* Botón CTA */}
-      <a
-        href="/#contacto"
-        onClick={(e) => handleNavClick(e, "/#contacto")}
-        style={{
-          background: GRADIENT,
-          color: "#fff",
-          fontWeight: 800,
-          fontSize: "13px",
-          padding: "10px 24px",
-          borderRadius: "999px",
-          textDecoration: "none",
-          cursor: "pointer",
-          transition: "opacity 0.2s",
-          display: "inline-block",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-      >
-        Solicitar viaje
-      </a>
+      {/* Acciones (CTA + menú de usuario) */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <a
+          href="/#contacto"
+          onClick={(e) => handleNavClick(e, "/#contacto")}
+          style={{
+            background: GRADIENT,
+            color: "#fff",
+            fontWeight: 800,
+            fontSize: "13px",
+            padding: "10px 24px",
+            borderRadius: "999px",
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: "opacity 0.2s",
+            display: "inline-block",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+        >
+          Solicitar viaje
+        </a>
+
+        <UserMenu />
+      </div>
     </nav>
   );
 }
