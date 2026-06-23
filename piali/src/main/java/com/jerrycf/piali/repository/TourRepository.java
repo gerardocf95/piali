@@ -3,9 +3,11 @@ package com.jerrycf.piali.repository;
 import com.jerrycf.piali.model.entity.Tour;
 import com.jerrycf.piali.model.entity.TourType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TourRepository extends JpaRepository<Tour, Long> {
     List<Tour> findByNameContainingIgnoreCase(String name);
 

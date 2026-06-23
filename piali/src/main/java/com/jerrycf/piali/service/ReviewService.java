@@ -4,8 +4,10 @@ package com.jerrycf.piali.service;
 import com.jerrycf.piali.exception.ResourceNotFoundException;
 import com.jerrycf.piali.model.DTO.review.ReviewRequest;
 import com.jerrycf.piali.model.DTO.review.ReviewResponse;
+import com.jerrycf.piali.model.entity.Destination;
 import com.jerrycf.piali.model.entity.Review;
 import com.jerrycf.piali.model.entity.User;
+import com.jerrycf.piali.repository.DestinationRepository;
 import com.jerrycf.piali.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,17 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final DestinationRepository destinationRepository;
 
     /*****  POST  *****/
     public ReviewResponse createReview(ReviewRequest request, User author) {
+        Destination destination = destinationRepository.findById(request.destinationId())
+                .orElseThrow(() -> new ResourceNotFoundException("El destino no existe para crear esta reseña"));
+
         Review review = new Review();
         review.setMessage(request.message());
         review.setStars(request.stars());
-        review.setDestinationId(request.destinationId());
+        review.setDestination(destination);
         review.setAuthor(author);
         return ReviewResponse.from(reviewRepository.save(review));
     }
@@ -37,7 +43,7 @@ public class ReviewService {
     }
 
     public List<ReviewResponse> getReviewsWithComments() {
-        return reviewRepository.findAllByMessageNotNull().stream()
+        return reviewRepository.findAllByMessageNotNullOrderByStarsDescCreatedAtDesc().stream()
                 .filter(review -> !review.getMessage().isBlank())
                 .map(ReviewResponse::from)
                 .toList();
@@ -49,7 +55,11 @@ public class ReviewService {
     }
 
     public Double getAverageRatingByDestination(Long id) {
-        return reviewRepository.findByDestinationId(id).stream()
+        List<Review> reviewByDestination = reviewRepository.findByDestination_Id(id);
+        if (!destinationRepository.existsById(id) || reviewByDestination.isEmpty()) {
+            return null;
+        }
+        return reviewByDestination.stream()
                 .collect(Collectors.averagingDouble(Review::getStars));
 
     }
