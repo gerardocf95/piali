@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -47,12 +48,13 @@ public class Tour {
     private DifficultyLevel difficultyLevel; // FACIL(no requiere condición particular), MODERADO(preferible condicion para terrenos un poco complicados), DIFÍCIL(indispensable buena condición para actividades extremas)
 
     // Precios
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     @Positive(message = "El precio por persona debe ser mayor a cero")
-    private Double pricePerPerson;
+    private BigDecimal adultPrice;
 
     @PositiveOrZero(message = "El precio para niños no puede ser negativo")
-    private Double childPrice; // null = mismo precio que un adulto
+    @Column(precision = 10, scale = 2)
+    private BigDecimal childPrice; // null = mismo precio que un adulto
 
     // Logística
     @Column(nullable = false)
@@ -70,6 +72,10 @@ public class Tour {
     @Positive(message = "La capacidad máxima debe ser mayor a cero")
     private Integer maxGroupSize;
 
+    @Column(name = "travelers", nullable = false)
+    @PositiveOrZero
+    private Integer currentTravelers = 0;
+
     // Logística de salida
     @Column(nullable = false)
     @NotBlank(message = "El punto de salida es obligatorio")
@@ -79,15 +85,18 @@ public class Tour {
     @Column(nullable = false)
     private TransportType transportType;
 
+    @Future(message = "La fecha de salida debe ser posterior a hoy")
+    private LocalDateTime departureDate;
+
     // Inclusiones
     @Column(columnDefinition = "TEXT")
-    private String includes; // Ej: "Transporte, hospedaje 2 noches, desayunos"
+    private String includes;
 
     @Column(columnDefinition = "TEXT")
-    private String notIncludes; // Ej: "Comidas, propinas, gastos personales"
+    private String notIncludes;
 
     @Column(columnDefinition = "TEXT")
-    private String itinerary; // Descripción día a día
+    private String itinerary;
 
     // Disponibilidad
     @Column(nullable = false)

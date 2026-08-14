@@ -36,6 +36,16 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
     }
 
+    @ExceptionHandler(InvalidBookingException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidBooking(InvalidBookingException ex, HttpServletRequest request) {
+        return build(HttpStatus.CONFLICT, ex.getMessage(), request);
+    }
+
+    @ExceptionHandler(UnauthorizedUserException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedUser(UnauthorizedUserException ex, HttpServletRequest request) {
+        return build(HttpStatus.FORBIDDEN, ex.getMessage(), request);
+    }
+
     // ── Spring Security ──────────────────────────────────────────────────
 
     @ExceptionHandler(BadCredentialsException.class)

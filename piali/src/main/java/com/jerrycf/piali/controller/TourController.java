@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class TourController {
 
     /*****  GET  *****/
     @GetMapping
-    public ResponseEntity<List<TourResponse>> findAllTours(){
+    public ResponseEntity<List<TourResponse>> findAllTours() {
         return ResponseEntity.ok(tourService.getAllTours());
     }
 
@@ -44,13 +45,23 @@ public class TourController {
     }
 
     @GetMapping("/type/{tourType}")
-    public ResponseEntity<List<TourResponse>> getToursByTourType(@PathVariable TourType tourType){
+    public ResponseEntity<List<TourResponse>> getToursByTourType(@PathVariable TourType tourType) {
         return ResponseEntity.ok(tourService.getToursByType(tourType));
     }
 
     @GetMapping("/available")
     public ResponseEntity<List<TourResponse>> getAllAvailableTours() {
         return ResponseEntity.ok(tourService.getAllAvailableTours());
+    }
+
+    @GetMapping("/{id}/availability")
+    public ResponseEntity<Integer> getTourAvailability(@PathVariable Long id) {
+        return ResponseEntity.ok(tourService.getTourAvailability(id));
+    }
+
+    @GetMapping("/{id}/isFull")
+    public ResponseEntity<Boolean> isTourFullyBooked(@PathVariable Long id) {
+        return ResponseEntity.ok(tourService.isTourFullyBooked(id));
     }
 
     /*****  POST  *****/
@@ -78,6 +89,12 @@ public class TourController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TourResponse> updateFeaturedTourById(@PathVariable Long id, @Valid @RequestBody TourFeaturedRequest request) {
         return ResponseEntity.ok(tourService.updateTourFeaturedById(id,request));
+    }
+
+    @PatchMapping("/{id}/update-departureDate")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<TourResponse> updateDepatureDate(@PathVariable Long id, @Valid @RequestBody LocalDateTime departureDate){
+        return ResponseEntity.ok(tourService.updateDepartureDate(id, departureDate));
     }
 
     /*****  DELETE  *****/

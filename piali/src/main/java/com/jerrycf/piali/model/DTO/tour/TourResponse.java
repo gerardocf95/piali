@@ -3,6 +3,7 @@ package com.jerrycf.piali.model.DTO.tour;
 import com.jerrycf.piali.model.DTO.destination.DestinationResponse;
 import com.jerrycf.piali.model.entity.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record TourResponse(
@@ -13,14 +14,16 @@ public record TourResponse(
         String imageUrl,
         TourType tourType,
         DifficultyLevel difficultyLevel,
-        Double pricePerPerson,
-        Double childPrice,
+        BigDecimal pricePerPerson,
+        BigDecimal childPrice,
         Integer durationDays,
         Integer nights,
         Integer minGroupSize,
         Integer maxGroupSize,
+        Integer currentTravelers,
         String departurePoint,
         TransportType transportType,
+        LocalDateTime departureDate,
         String includes,
         String notIncludes,
         String itinerary,
@@ -40,14 +43,16 @@ public record TourResponse(
                 tour.getImageUrl(),
                 tour.getTourType(),
                 tour.getDifficultyLevel(),
-                tour.getPricePerPerson(),
+                tour.getAdultPrice(),
                 tour.getChildPrice(),
                 tour.getDurationDays(),
                 tour.getNights(),
                 tour.getMinGroupSize(),
                 tour.getMaxGroupSize(),
+                tour.getCurrentTravelers(),
                 tour.getDeparturePoint(),
                 tour.getTransportType(),
+                tour.getDepartureDate(),
                 tour.getIncludes(),
                 tour.getNotIncludes(),
                 tour.getItinerary(),

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -66,6 +67,16 @@ public class TourService {
                 .toList();
     }
 
+    public Integer getTourAvailability(Long id) {
+        Tour tour = tourRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tour con id: " + id + " no encontrado."));
+        return tour.getMaxGroupSize() - tour.getCurrentTravelers();
+    }
+
+    public Boolean isTourFullyBooked(Long id) {
+        Tour tour = tourRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Tour con id: " + id + " no encontrado."));
+        return tour.getCurrentTravelers().equals(tour.getMaxGroupSize());
+    }
+
     /***** POST  *****/
     public TourResponse createNewTour(TourRequest request) {
         if (tourRepository.existsByNameIgnoreCase(request.name())){
@@ -107,6 +118,13 @@ public class TourService {
         return TourResponse.from(tourRepository.save(tour));
     }
 
+    public TourResponse updateDepartureDate(Long id, LocalDateTime departureDate){
+        Tour tour = getTour(id);
+
+        tour.setDepartureDate(departureDate);
+        return TourResponse.from(tourRepository.save(tour));
+    }
+
     /*****   DELETE  *****/
     public void deleteTourById(Long id) {
         if (!tourRepository.existsById(id)){
@@ -130,7 +148,7 @@ public class TourService {
         tour.setImageUrl(request.imageUrl());
         tour.setTourType(request.tourType());
         tour.setDifficultyLevel(request.difficultyLevel());
-        tour.setPricePerPerson(request.pricePerPerson());
+        tour.setAdultPrice(request.pricePerPerson());
         tour.setChildPrice(request.childPrice());
         tour.setDurationDays(request.durationDays());
         tour.setNights(request.nights());
@@ -138,6 +156,7 @@ public class TourService {
         tour.setMaxGroupSize(request.maxGroupSize());
         tour.setDeparturePoint(request.departurePoint());
         tour.setTransportType(request.transportType());
+        tour.setDepartureDate(request.departureDate());
         tour.setIncludes(request.includes());
         tour.setNotIncludes(request.notIncludes());
         tour.setItinerary(request.itinerary());

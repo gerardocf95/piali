@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 public record TourRequest(
 
         @NotNull(message = "El destino es obligatorio")
@@ -27,10 +30,10 @@ public record TourRequest(
         DifficultyLevel difficultyLevel,
         
         @Positive(message = "El precio por persona debe ser mayor a cero")
-        Double pricePerPerson,
+        BigDecimal pricePerPerson,
         
         @PositiveOrZero(message = "El precio para niños no puede ser negativo")
-        Double childPrice,
+        BigDecimal childPrice,
         
         @PositiveOrZero(message = "La duracion no puede ser negativa")
         Integer durationDays,
@@ -46,6 +49,8 @@ public record TourRequest(
         
         @NotBlank(message = "El punto de salida es obligatorio")
         String departurePoint,
+
+        LocalDateTime departureDate,
         
         TransportType transportType,
         
