@@ -66,6 +66,14 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- H2 en memoria (modo PostgreSQL) para tests de integración/concurrencia sin Docker.
+		     Nota: Testcontainers sería más fiel a Postgres, pero el docker-java que trae
+		     Spring Boot 3.4.5 no es compatible con Docker Engine 29 (devuelve HTTP 400). -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
